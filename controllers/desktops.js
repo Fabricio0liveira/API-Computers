@@ -8,10 +8,9 @@ module.exports = app => {
     app.post('/computers', (req, res) => {
         const computer = req.body
 
-        Computers.add(computer)
+        Computers.add(computer, res)
         
-        console.log(req.body)
-        res.send('Voçê está na rota computadores e está enviando um POST')
+        // console.log(req.body)
     })
 }
 
