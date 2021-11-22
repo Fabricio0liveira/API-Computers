@@ -1,3 +1,4 @@
+const { deleteComputer } = require('../models/desktops')
 const Computers = require('../models/desktops')
 
 module.exports = app => {
@@ -10,7 +11,6 @@ module.exports = app => {
     // List computer by Id
     app.get('/computers/:id', (req, res) => {
         const id = parseInt(req.params.id)
-        // console.log(req.params)
 
         Computers.searchById(id, res)
     })
@@ -20,8 +20,21 @@ module.exports = app => {
         const computer = req.body
 
         Computers.add(computer, res)
+    })
+
+    // Chance computer information
+    app.patch('/computers/:id', (req, res) => {
+        const id = parseInt(req.params.id)
+        const values = req.body
+
+        Computers.changeInformation(id, values, res)
+    })
+
+    app.delete('/computers/:id', (req, res) => {
+        const id = parseInt(req.params.id)
+
+        deleteComputer(id, res)
         
-        // console.log(req.body)
     })
 }
 

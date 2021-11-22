@@ -44,7 +44,7 @@ class Computers {
                 if(erro) {
                     res.status(400).json(erro)
                 } else {
-                    res.status(201).json(results)
+                    res.status(201).json(updateRecord)
                 }
             })
         }
@@ -74,6 +74,34 @@ class Computers {
                 res.status(400).json(erro)
             } else {
                 res.status(200).json(computer)
+            }
+        })
+    }
+
+    // Chance computer information
+    changeInformation(id, values, res) {
+        // Add field validations in this part of computer data change
+
+        const sql = 'UPDATE Computers SET ? WHERE id=?'
+
+        connectionDb.query(sql, [values, id], (erro, results) => {
+            if(erro) {
+                res.status(400).json(erro)
+            } else {
+                res.status(200).json({...values, id})
+            }
+        })
+    }
+
+    // Delete computer registry by id
+    deleteComputer(id, res) {
+        const sql = 'DELETE FROM Computers WHERE id=?'
+
+        connectionDb.query(sql, id, (erro, results) => {
+            if(erro) {
+                res.status(400).json(erro)
+            } else {
+                res.status(200).json({id})
             }
         })
     }
