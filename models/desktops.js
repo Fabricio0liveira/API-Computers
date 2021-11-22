@@ -1,6 +1,8 @@
 const connectionDb = require('../infrastructure/connection')
 
 class Computers {
+
+    // Registering new computers
     add(computer, res) {
         const data = new Date()
 
@@ -31,7 +33,6 @@ class Computers {
         const mistakes = validations.filter(field => !field.valid)
         const thereIsErrror = mistakes.length
         
-        
         if(thereIsErrror) {
             res.status(400).json(mistakes)
         } else {
@@ -47,6 +48,34 @@ class Computers {
                 }
             })
         }
+    }
+
+    // List all computers
+    listComputers(res) {
+        const sql = 'SELECT * FROM Computers'
+
+        connectionDb.query(sql, (erro, results) => {
+            if(erro) {
+                res.status(400).json(erro)
+            } else {
+                res.status(200).json(results)
+            }
+        })
+    }
+
+    // List computer by id
+    searchById(id, res) {
+        const sql = `SELECT * FROM Computers WHERE id=${id} `
+
+        connectionDb.query(sql, (erro, results) => {
+            const computer = results[0]
+
+            if(erro) {
+                res.status(400).json(erro)
+            } else {
+                res.status(200).json(computer)
+            }
+        })
     }
 }
 
